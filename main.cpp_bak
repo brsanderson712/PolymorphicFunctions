@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+
+class Animal {
+public:
+	virtual void showType()
+		{	std::cout<< "I'm an animal\n";	}
+	virtual void communicate()
+		{	std::cout<< "Hello!\n";	}
+	virtual void move()
+		{	std::cout<< "I'm walking\n";	}
+
+};
+
+class Bird : public Animal
+{
+private:
+public:
+	void showType()
+		{	std::cout<< "I'm a Bird\n";	}
+	void communicate()
+		{	std::cout<< "Tweet! Tweet!\n";	}
+	void move()
+		{	std::cout<< "I'm flying\n";	}
+};
+
+class Dog : public Animal
+{
+public:
+	using Animal::move;
+	void showType()
+		{	std::cout<< "I'm a dog\n";	}
+	void communicate()
+		{	std::cout<< "Woof! Woof!\n";	}
+	void move(std::string reason)
+		{	
+			std::cout << "I'm" << reason << "\n";	
+		}
+};
+
+
+void showAnimal(Animal &);
+
+int main()
+{
+	Animal myAnimal;
+	Bird myBird;
+	Dog myDog;
+
+	std::string reason = " chasing the mail man ";
+	bool running = true;
+
+	std::cout << "myAnimal ";
+	showAnimal(myAnimal);
+	// ---------------------------------------------------------
+	std::cout << "myDog ";
+	showAnimal(myDog);
+
+	std::cout << "As Dog where running is " << running << "\n";
+	if (running)
+		myDog.move(reason);
+	else
+		myDog.move();
+
+	// ---------------------------------------------------------
+
+	std::cout << "myBird ";
+	showAnimal(myBird);
+
+	std::cout << "As Bird\n";
+	myBird.move();
+
+	std::cout << "As animal again\n";
+	Animal* anim = &myBird;
+	anim->move();
+	
+
+	system("pause");
+}
+
+void showAnimal(Animal &animal)
+{
+	std::cout << " as Animal\n";
+	animal.communicate();
+	animal.showType();
+	animal.move();
+}
